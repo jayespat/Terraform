@@ -1,0 +1,47 @@
+resource "aws_security_group" "ec2_sg" {
+  name        = "upgrad-ec2-sg"
+  description = "upgrad-ec2-sg"
+  vpc_id      = aws_vpc.this.id
+  ingress {
+    description      = "SSH from VPC"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  tags = {
+    Name = "upgrad-ec2-sg"
+    Terraform = "managedbyTerraform"
+  }
+}
+resource "aws_instance" "public" {
+    ami = "ami-09d3b3274b6c5d4aa" //THIS IS WRONG PRACTISE
+    key_name = "upgrad-demo" //THIS IS WRONG PRACTISE
+    instance_type = "t2.micro"
+    subnet_id      = aws_subnet.public1.id
+    vpc_security_group_ids =  [aws_security_group.ec2_sg.id]
+    associate_public_ip_address = true
+    tags = {
+        Name = "upgrad-ec2-public"
+        Terraform = "managedbyTerraform"
+    }
+}
+resource "aws_instance" "private" {
+    ami = "ami-09d3b3274b6c5d4aa" //THIS IS WRONG PRACTISE
+    key_name = "upgrad-demo" //THIS IS WRONG PRACTISE
+    instance_type = "t2.micro"
+    subnet_id      = aws_subnet.private1.id
+    vpc_security_group_ids =  [aws_security_group.ec2_sg.id]
+    associate_public_ip_address = false
+    tags = {
+        Name = "upgrad-ec2-private"
+        Terraform = "managedbyTerraform"
+    }
+}
