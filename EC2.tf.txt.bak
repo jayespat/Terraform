@@ -23,7 +23,7 @@ resource "aws_security_group" "ec2_sg" {
 }
 resource "aws_instance" "public" {
     ami = "ami-09d3b3274b6c5d4aa" //THIS IS WRONG PRACTISE
-    key_name = "jayesh_EC2_login" //THIS IS WRONG PRACTISE
+    key_name = "upgrad-demo" //THIS IS WRONG PRACTISE
     instance_type = "t2.micro"
     subnet_id      = aws_subnet.public1.id
     vpc_security_group_ids =  [aws_security_group.ec2_sg.id]
@@ -35,7 +35,7 @@ resource "aws_instance" "public" {
 }
 resource "aws_instance" "private" {
     ami = "ami-09d3b3274b6c5d4aa" //THIS IS WRONG PRACTISE
-    key_name = "jayesh_EC2_login" //THIS IS WRONG PRACTISE
+    key_name = "upgrad-demo" //THIS IS WRONG PRACTISE
     instance_type = "t2.micro"
     subnet_id      = aws_subnet.private1.id
     vpc_security_group_ids =  [aws_security_group.ec2_sg.id]
